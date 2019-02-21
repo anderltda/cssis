@@ -13,6 +13,7 @@
 		<class>br.com.cssis.dominio.cadastro.entity.FarmaciaConveniada</class>
 		<class>br.com.cssis.dominio.cadastro.entity.FarmConvGerente</class>
 		<class>br.com.cssis.dominio.cadastro.entity.Localidade</class>
-		<class>br.com.cssis.dominio.cadastro.entity.TipoLogradouro</class></persistence-unit>
+		<class>br.com.cssis.dominio.cadastro.entity.TipoLogradouro</class>
+	</persistence-unit>
 
 </persistence>
