@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ws="http://jax-ws.dev.java.net/spring/core"
+	xmlns:wss="http://jax-ws.dev.java.net/spring/servlet" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+						http://jax-ws.dev.java.net/spring/core 			http://jax-ws.dev.java.net/spring/core.xsd
+						http://jax-ws.dev.java.net/spring/servlet		http://jax-ws.dev.java.net/spring/servlet.xsd
+						http://www.springframework.org/schema/util 		http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+  
+
+	<!-- JOBs -->
+	<bean name="processarTmpEnderecoJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass" value="br.com.cssis.quartz.job.ProcessarTmpEnderecoQuartzJobBean" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="commonsService" value-ref="commonsService" />
+				<entry key="clustersUnitsIds">
+					<list>
+						<value>DSO01</value>						
+						<value>HML</value>
+						<value>TESTE</value>
+					</list>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	
+	<!-- TRIGGERs -->
+	<bean id="processarTmpEnderecoTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="processarTmpEnderecoJob" />
+		<property name="cronExpression" value="0 00 01 ? * *" />
+	</bean>	
+	
+	<!-- SCHEDULER-FACTORY -->
+	<bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="processarTmpEnderecoTrigger" />
+			</list>
+		</property>
+	</bean>
+</beans>

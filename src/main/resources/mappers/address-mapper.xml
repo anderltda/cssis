@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Address">
+	
+	<resultMap id="addressLocationDTO" type="br.com.cssis.dominio.cadastro.dto.AddressLocationDTO">  	
+		<result property="nome"          column="NOME"/>
+		<result property="razaosocial"   column="RAZAO_SOCIAL"/>
+		<result property="site"          column="SITE"/>
+		<result property="email"         column="EMAIL"/>
+		<result property="responsavel"   column="RESPONSAVEL"/>
+		<result property="cnpj"          column="CNPJ"/>
+		<result property="horario"       column="HORARIO"/>
+		<result property="logradouro"    column="LOGRADOURO"/>
+		<result property="numero"        column="NUMERO"/>
+		<result property="complemento"   column="COMPLEMENTO"/>
+		<result property="bairro" 		 column="BAIRRO"/>
+		<result property="cidade"    	 column="NOME_LOCALIDADE"/>
+		<result property="uf"			 column="UF"/>
+		<result property="cep"			 column="CEP"/>
+		<result property="latitude" 	 column="LATITUDE"/>
+		<result property="longitude" 	 column="LONGITUDE"/>
+		<result property="ddd" 	         column="DDD_TELEFONE"/>
+		<result property="telefone1" 	 column="TELEFONE_1"/>
+		<result property="telefone2" 	 column="TELEFONE_2"/>
+	</resultMap>	
+	
+	<select id="bucarPorBairroCidadeUf" parameterType="java.util.Map" resultMap="addressLocationDTO" >
+				SELECT 
+			          FC.NOME,
+			          FC.RAZAO_SOCIAL,
+			          FC.SITE,
+			          FC.EMAIL,
+			          FC.RESPONSAVEL,
+			          FC.CNPJ,
+			          FCEH.HORARIO_INICIAL || ' - ' || FCEH.HORARIO_FINAL AS HORARIO,
+			          FCE.LOGRADOURO,
+			          FCE.NUMERO,
+			          FCE.COMPLEMENTO,
+			          FCE.BAIRRO,
+			          UPPER(LO.NOME_LOCALIDADE) AS NOME_LOCALIDADE,
+			          LO.UF,
+			          FCE.CEP,
+			          FCE.LATITUDE,
+			          FCE.LONGITUDE,
+			          FCE.DDD_TELEFONE,
+			          FCE.TELEFONE_1,
+			          FCE.TELEFONE_2
+			     FROM FARM_CONV_ENDERECO FCE
+			    INNER JOIN LOCALIDADE                   LO ON LO.ID_LOCALIDADE           = FCE.ID_LOCALIDADE
+			    INNER JOIN FARMACIA_CONVENIADA          FC ON FC.ID_FARMACIA_CONVENIADA  = FCE.ID_FARMACIA_CONVENIADA
+			    INNER JOIN FARM_CONV_ENDERECO_HORARIO FCEH ON FCEH.ID_FARM_CONV_ENDERECO = FCE.ID_FARM_CONV_ENDERECO                 		    
+                INNER JOIN FARM_CONV_REDE              RED ON RED.ID_FARM_CONV_REDE      = FC.ID_FARM_CONV_REDE
+			    WHERE FCE.LATITUDE  IS NOT NULL
+			      AND FCE.LONGITUDE IS NOT NULL
+			      AND RED.IND_USO_INTERNO IN ('${USO_INTERNO}', 'A') 
+		      <if test="CEP != null">
+				AND FCE.CEP = '${CEP}'
+			  </if>			      
+		      <if test="UF != null">
+				AND LO.UF = '${UF}'
+			  </if>
+		      <if test="BAIRRO != null">
+				AND FCE.BAIRRO = '${BAIRRO}'
+			  </if>			  
+			  <if test="CIDADE != null">
+				AND UPPER(LO.NOME_LOCALIDADE) = UPPER('${CIDADE}')
+			  </if>
+			  <if test="VINTEQUATROHORAS != null">
+				AND FCEH.HORARIO_INICIAL = '24:00'
+			  </if>	
+				GROUP BY
+			            FC.NOME,
+			            FC.RAZAO_SOCIAL,
+			            FC.SITE,
+			            FC.EMAIL,
+			            FC.RESPONSAVEL,
+			            FC.CNPJ,
+			            FCEH.HORARIO_INICIAL || ' - ' || FCEH.HORARIO_FINAL,
+			            FCE.LOGRADOURO,
+			            FCE.NUMERO,
+			            FCE.COMPLEMENTO,
+			            FCE.BAIRRO,
+			            LO.NOME_LOCALIDADE,
+			            LO.UF,
+			            FCE.CEP,
+			            FCE.LATITUDE,
+			            FCE.LONGITUDE,
+			            FCE.DDD_TELEFONE,
+			            FCE.TELEFONE_1,
+			            FCE.TELEFONE_2
+			            ORDER BY FC.NOME ASC			  		  
+	</select>
+	
+	<select id="buscaFarmaciaProxima" parameterType="java.util.Map" resultMap="addressLocationDTO" >
+				<![CDATA[
+				SELECT 
+			          FC.NOME,
+			          FC.RAZAO_SOCIAL,
+			          FC.SITE,
+			          FC.EMAIL,
+			          FC.RESPONSAVEL,
+			          FC.CNPJ,
+			          FCEH.HORARIO_INICIAL || ' - ' || FCEH.HORARIO_FINAL AS HORARIO,
+			          FCE.LOGRADOURO,
+			          FCE.NUMERO,
+			          FCE.COMPLEMENTO,
+			          FCE.BAIRRO,
+			          UPPER(LO.NOME_LOCALIDADE) AS NOME_LOCALIDADE,
+			          LO.UF,
+			          FCE.CEP,
+			          FCE.LATITUDE,
+			          FCE.LONGITUDE,
+			          FCE.DDD_TELEFONE,
+			          FCE.TELEFONE_1,
+			          FCE.TELEFONE_2
+			     FROM FARM_CONV_ENDERECO FCE
+			    INNER JOIN LOCALIDADE                   LO ON LO.ID_LOCALIDADE           = FCE.ID_LOCALIDADE
+			    INNER JOIN FARMACIA_CONVENIADA          FC ON FC.ID_FARMACIA_CONVENIADA  = FCE.ID_FARMACIA_CONVENIADA
+			    INNER JOIN FARM_CONV_ENDERECO_HORARIO FCEH ON FCEH.ID_FARM_CONV_ENDERECO = FCE.ID_FARM_CONV_ENDERECO
+			    INNER JOIN FARM_CONV_REDE              RED ON RED.ID_FARM_CONV_REDE      = FC.ID_FARM_CONV_REDE
+			    WHERE FCE.LATITUDE  >= to_number(${latitude1})
+			      AND FCE.LATITUDE  <= to_number(${latitude2})
+			      AND FCE.LONGITUDE >= to_number(${longitude1})
+			      AND FCE.LONGITUDE <= to_number(${longitude2})
+			      AND RED.IND_USO_INTERNO IN ('${USO_INTERNO}', 'A') 
+			  ]]>	     
+			  <if test="VINTEQUATROHORAS != null">
+				AND FCEH.HORARIO_INICIAL = '24:00'
+			  </if>				      
+				GROUP BY
+			            FC.NOME,
+			            FC.RAZAO_SOCIAL,
+			            FC.SITE,
+			            FC.EMAIL,
+			            FC.RESPONSAVEL,
+			            FC.CNPJ,
+			            FCEH.HORARIO_INICIAL || ' - ' || FCEH.HORARIO_FINAL,
+			            FCE.LOGRADOURO,
+			            FCE.NUMERO,
+			            FCE.COMPLEMENTO,
+			            FCE.BAIRRO,
+			            LO.NOME_LOCALIDADE,
+			            LO.UF,
+			            FCE.CEP,
+			            FCE.LATITUDE,
+			            FCE.LONGITUDE,
+			            FCE.DDD_TELEFONE,
+			            FCE.TELEFONE_1,
+			            FCE.TELEFONE_2
+			            ORDER BY FC.NOME ASC
+					            			  		  
+	</select>		
+
+	<select id="getCidadesUf" parameterType="java.util.Map" resultMap="addressLocationDTO" >
+		   SELECT 
+		          UPPER(LO.NOME_LOCALIDADE) AS NOME_LOCALIDADE,
+		          LO.UF
+		     FROM FARM_CONV_ENDERECO FCE
+		    INNER JOIN LOCALIDADE LO ON LO.ID_LOCALIDADE = FCE.ID_LOCALIDADE
+		    WHERE FCE.LATITUDE  IS NOT NULL
+		      AND FCE.LONGITUDE IS NOT NULL   
+	      <if test="UF != null">
+			AND LO.UF = '${UF}'
+		  </if>
+		   GROUP BY
+		         LO.NOME_LOCALIDADE,
+		         LO.UF 
+		         ORDER BY LO.NOME_LOCALIDADE ASC		  		  
+	</select>
+	
+	<select id="getBairros" parameterType="java.util.Map" resultMap="addressLocationDTO" >
+		   SELECT 
+		          FCE.BAIRRO,
+		          UPPER(LO.NOME_LOCALIDADE) AS NOME_LOCALIDADE,
+		          LO.UF
+		     FROM FARM_CONV_ENDERECO FCE
+		    INNER JOIN LOCALIDADE LO ON LO.ID_LOCALIDADE = FCE.ID_LOCALIDADE
+		    WHERE FCE.LATITUDE  IS NOT NULL
+		        AND FCE.LONGITUDE IS NOT NULL
+		      <if test="UF != null">
+				AND LO.UF = '${UF}'
+			  </if>
+			  <if test="CIDADE != null">
+				AND UPPER(LO.NOME_LOCALIDADE) = UPPER('${CIDADE}')
+			  </if>			  
+			   GROUP BY
+			         FCE.BAIRRO,
+			         LO.NOME_LOCALIDADE,
+			         LO.UF 
+			         ORDER BY LO.NOME_LOCALIDADE ASC		  		  
+	</select>		
+
+</mapper>

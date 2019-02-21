@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<standard-type-mapping>
+
+	<sql-type jdbc-type="ARRAY" java-type="java.util.ArrayList" />
+
+	<sql-type jdbc-type="BIGINT" java-type="java.lang.Integer" />
+
+	<sql-type jdbc-type="BINARY" java-type="java.lang.Boolean" />
+
+	<sql-type jdbc-type="BIT" java-type="java.lang.Byte" />
+
+	<sql-type jdbc-type="BLOB" java-type="java.lang.Object" />
+
+	<sql-type jdbc-type="CHAR" java-type="java.lang.Character" />
+	
+	<sql-type jdbc-type="CHAR" java-type="java.lang.Boolean" length="1"/>
+
+	<sql-type jdbc-type="CLOB" java-type="java.lang.String" />
+
+	<sql-type jdbc-type="DATALINK" java-type="java.lang.Object" />
+
+	<sql-type jdbc-type="DATE" java-type="java.util.Date" />
+
+	<sql-type jdbc-type="DECIMAL" java-type="java.lang.Double" />
+	<sql-type jdbc-type="FLOAT" java-type="java.lang.Float" />
+	<sql-type jdbc-type="INTEGER" java-type="java.lang.Integer" />
+	<sql-type jdbc-type="DOUBLE" java-type="java.lang.Double" />
+	
+	<sql-type jdbc-type="NUMERIC" java-type="java.lang.Double" />
+
+
+    <sql-type jdbc-type="NUMERIC" scale="10" java-type="java.lang.Long" />
+    <sql-type jdbc-type="DECIMAL" scale="10" java-type="java.lang.Long" /> 
+
+    <sql-type jdbc-type="NUMERIC" scale="15" java-type="java.lang.Long" />
+    <sql-type jdbc-type="DECIMAL" scale="15" java-type="java.lang.Long" /> 
+
+
+	<sql-type jdbc-type="NUMERIC" scale="0" java-type="java.lang.Long" />
+	<sql-type jdbc-type="DECIMAL" scale="0" java-type="java.lang.Long" />
+
+	<sql-type jdbc-type="NUMERIC" scale="0" precision="1" java-type="java.lang.Boolean" />
+	<sql-type jdbc-type="DECIMAL" scale="0" precision="1" java-type="java.lang.Boolean" />	
+
+	<sql-type jdbc-type="NUMERIC" scale="0" precision="2" java-type="java.lang.Byte" />
+	<sql-type jdbc-type="DECIMAL" scale="0" precision="2" java-type="java.lang.Byte" />	
+	
+	<sql-type jdbc-type="NUMERIC" scale="0" precision="4" java-type="java.lang.Integer" />
+	<sql-type jdbc-type="DECIMAL" scale="0" precision="4" java-type="java.lang.Integer" />	
+
+	<sql-type jdbc-type="NUMERIC" scale="0" precision="3" java-type="java.lang.Short" />
+	<sql-type jdbc-type="DECIMAL" scale="0" precision="3" java-type="java.lang.Short" />	
+
+
+	<sql-type jdbc-type="DISTINCT" java-type="java.lang.Object" />
+
+	<sql-type jdbc-type="JAVA_OBJECT" java-type="java.lang.Object" />
+
+	<sql-type jdbc-type="LONGVARBINARY" java-type="java.lang.Object" />
+
+	<sql-type jdbc-type="LONGVARCHAR" java-type="java.lang.Object" />
+
+	<sql-type jdbc-type="NULL" java-type="java.lang.Object" />
+
+	<sql-type jdbc-type="OTHER" java-type="java.lang.Object" />
+
+	<sql-type jdbc-type="REF" java-type="java.lang.Object" />
+
+	<sql-type jdbc-type="SMALLINT" java-type="java.lang.Integer" />
+
+	<sql-type jdbc-type="STRUCT" java-type="java.lang.Object" />
+
+	<sql-type jdbc-type="TIME" java-type="java.util.Date" />	
+
+	<sql-type jdbc-type="TIMESTAMP" java-type="java.util.Date" />
+
+	<sql-type jdbc-type="TINYINT" java-type="java.lang.Byte" />
+
+	<sql-type jdbc-type="VARBINARY" java-type="java.lang.Object" />
+
+	<sql-type jdbc-type="VARCHAR" java-type="java.lang.String" />
+
+</standard-type-mapping>

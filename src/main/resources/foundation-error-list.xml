@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<exception-list>
+	<exception>
+		<id>100</id>
+		<code>SQL-ERR-100</code>
+		<msg>Critério Inválido</msg>
+	</exception>
+	<exception>	
+		<id>101</id>
+		<code>SQL-ERR-101</code>
+		<msg>Erro ao se conectar no Banco de Dados</msg>
+	</exception>
+	<exception>	
+		<id>102</id>
+		<code>SQL-ERR-102</code>
+		<msg>Nome de Query Inválido</msg>
+	</exception>
+	<exception>	
+		<id>103</id>
+		<code>SQL-ERR-103</code>
+		<msg>SQL Vazio</msg>
+	</exception>
+	<exception>	
+		<id>104</id>
+		<code>SQL-ERR-104</code>
+		<msg>Conexão Inválida</msg>
+	</exception>
+	<exception>	
+		<id>105</id>
+		<code>SQL-ERR-105</code>
+		<msg>Erro na execução do SQL</msg>
+	</exception>
+	<exception>	
+		<id>106</id>
+		<code>SQL-ERR-106</code>
+		<msg>Transporter Inválido</msg>
+	</exception>
+	<exception>	
+		<id>107</id>
+		<code>SQL-ERR-107</code>
+		<msg>Erro genérico de SQL</msg>
+	</exception>
+	<exception>	
+		<id>108</id>
+		<code>SQL-ERR-108</code>
+		<msg>Nome de Coluna Inválido</msg>
+	</exception>
+	<exception>	
+		<id>109</id>
+		<code>SQL-ERR-109</code>
+		<msg>Erro de Bind (PreparedStatement)</msg>
+	</exception>
+	<exception>	
+		<id>110</id>
+		<code>PG-ERR-110</code>
+		<msg>Página Inválida</msg>
+	</exception>		
+</exception-list>
